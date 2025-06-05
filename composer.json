@@ -24,9 +24,10 @@
 
     "scripts": {
         "post-autoload-dump": [
-             "@php bin/livewire-tools-table-instruction.php"
+            "@php artisan livewire-tools-table:post-install"
         ]
-    },
+    }
+
     "require": {
         "php": ">=8.1",
         "illuminate/support": "^12.0",
