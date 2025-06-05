@@ -4,6 +4,8 @@ namespace GabrielBerrios\LivewireToolsTable\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use GabrielBerrios\LivewireToolsTable\Commands\MakeTableCommand;
+use GabrielBerrios\LivewireToolsTable\Commands\PostInstallCommand;
+
 
 class LivewireToolsTableServiceProvider extends ServiceProvider
 {
@@ -23,10 +25,10 @@ class LivewireToolsTableServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MakeTableCommand::class,
+                PostInstallCommand::class, // 👈 Nuevo
             ]);
-
-            $this->displayInstallationMessage();
         }
+
 
         // Registra las vistas para que Livewire pueda usarlas
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'livewire-tools-table');
