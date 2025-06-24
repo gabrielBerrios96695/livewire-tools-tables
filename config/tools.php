@@ -1,5 +1,4 @@
 <?php
-
 return [
-    'theme' => env('TOOLS_TABLE_THEME', 'tailwind-dark'),
+    'style' => env('TOOLS_TABLE_STYLE', 'dark'),
 ];

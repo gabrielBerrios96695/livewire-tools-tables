@@ -13,8 +13,6 @@ abstract class BaseTable extends Component
 
     protected Sortable $sortable;
 
-    public string $theme = '';
-
     public function mount()
     {
         $this->sortable = new Sortable();
@@ -22,7 +20,7 @@ abstract class BaseTable extends Component
 
     public function sortBy(string $field)
     {
-        if (! isset($this->sortable)) {
+        if (!isset($this->sortable)) {
             $this->sortable = new Sortable();
         }
 
@@ -37,7 +35,7 @@ abstract class BaseTable extends Component
 
     protected function applySorting(Builder $query): Builder
     {
-        if (! isset($this->sortable)) {
+        if (!isset($this->sortable)) {
             $this->sortable = new Sortable();
         }
 
@@ -51,7 +49,7 @@ abstract class BaseTable extends Component
     {
         $query = $this->getRecords();
 
-        if (! $query instanceof Builder) {
+        if (!$query instanceof Builder) {
             throw new \Exception('El método getRecords debe devolver un Builder.');
         }
 
@@ -60,9 +58,7 @@ abstract class BaseTable extends Component
 
     public function render()
     {
-        $theme = $this->theme ?: config('tools.theme');
-
-        return view("tools::components.{$theme}.table", [
+        return view('tools-table::components.table', [
             'columns' => $this->columns(),
             'records' => $this->sortedRecords,
             'sortField' => $this->sortField,
@@ -71,9 +67,5 @@ abstract class BaseTable extends Component
     }
 
     abstract protected function getRecords(): Builder;
-
-    protected function columns(): array
-    {
-        return [];
-    }
+    abstract protected function columns(): array;
 }

@@ -1,5 +1,6 @@
-<div class="table-container">
-    <table class="data-table">
+{{-- resources/views/components/table.blade.php --}}
+<div class="tools-table-container {{ config('tools-table.style', 'dark') }}-style">
+    <table class="tools-data-table">
         <thead>
             <tr>
                 @foreach ($columns as $column)
@@ -10,7 +11,7 @@
                     <th
                         @if ($sortable)
                             wire:click="sortBy('{{ $sortKey }}')"
-                            class="sortable"
+                            class="{{ $sortable ? 'sortable' : '' }} {{ $sortField === $sortKey ? 'sorted' : '' }}"
                         @endif
                     >
                         <div class="th-content">
@@ -43,3 +44,11 @@
         </tbody>
     </table>
 </div>
+
+@push('styles')
+    @if(View::exists('tools-table::components.styles.'.config('tools-table.style', 'dark')))
+        @include('tools-table::components.styles.'.config('tools-table.style', 'dark'))
+    @else
+        @include('tools-table::components.styles.dark')
+    @endif
+@endpush
