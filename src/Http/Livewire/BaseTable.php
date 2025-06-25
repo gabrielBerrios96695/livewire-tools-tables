@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class BaseTable extends Component
 {
+    public string $style = 'dark';
     public ?string $sortField = null;
     public ?string $sortDirection = null;
 
@@ -58,11 +59,12 @@ abstract class BaseTable extends Component
 
     public function render()
     {
-        return view('tools-table::components.table', [
-            'columns' => $this->columns(),
-            'records' => $this->sortedRecords,
-            'sortField' => $this->sortField,
-            'sortDirection' => $this->sortDirection,
+       return view('tools-table::components.table', [
+        'columns' => $this->columns(),
+        'records' => $this->sortedRecords,
+        'sortField' => $this->sortField,
+        'sortDirection' => $this->sortDirection,
+        'style' => $this->style,
         ]);
     }
 

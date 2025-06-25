@@ -2,42 +2,48 @@
     .tools-table-container.minimal-style {
         background-color: transparent;
         color: inherit;
+        padding: 0;
+        overflow-x: auto;
     }
 
     .tools-table-container.minimal-style .tools-data-table {
         width: 100%;
         border-collapse: collapse;
-        background-color: transparent;
+        font-size: 0.875rem;
+    }
+
+    .tools-table-container.minimal-style th,
+    .tools-table-container.minimal-style td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
     }
 
     .tools-table-container.minimal-style th {
-        padding: 0.75rem;
-        text-align: left;
-        font-weight: 500;
-        border-bottom: 1px solid #e2e8f0;
+        font-weight: 600;
+        text-transform: none;
+        background-color: #f9fafb;
+        font-size: 0.875rem;
     }
 
-    .tools-table-container.minimal-style td {
-        padding: 0.75rem;
-        border-bottom: 1px solid #edf2f7;
+    .tools-table-container.minimal-style tr:hover td {
+        background-color: #f3f4f6;
     }
 
-    .tools-table-container.minimal-style tr:last-child td {
-        border-bottom: none;
-    }
-
-    .tools-table-container.minimal-style .sortable:hover {
+    .tools-table-container.minimal-style .sortable {
         cursor: pointer;
-        text-decoration: underline;
     }
 
     .tools-table-container.minimal-style .sorted {
-        font-weight: 600;
+        color: #3b82f6;
     }
 
     .tools-table-container.minimal-style .sort-icon {
-        margin-left: 0.3rem;
-        font-size: 0.7em;
-        opacity: 0.7;
+        margin-left: 0.5rem;
+    }
+
+    .tools-table-container.minimal-style .th-content {
+        display: flex;
+        align-items: center;
     }
 </style>

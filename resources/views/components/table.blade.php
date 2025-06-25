@@ -1,5 +1,10 @@
-{{-- resources/views/components/table.blade.php --}}
-<div class="tools-table-container {{ config('tools-table.style', 'dark') }}-style">
+@php
+    $style = $style ?? 'dark';
+@endphp
+
+@includeIf("tools-table::components.styles.$style")
+
+<div class="tools-table-container {{ $style }}-style">
     <table class="tools-data-table">
         <thead>
             <tr>
@@ -44,11 +49,3 @@
         </tbody>
     </table>
 </div>
-
-@push('styles')
-    @if(View::exists('tools-table::components.styles.'.config('tools-table.style', 'dark')))
-        @include('tools-table::components.styles.'.config('tools-table.style', 'dark'))
-    @else
-        @include('tools-table::components.styles.dark')
-    @endif
-@endpush
