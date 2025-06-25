@@ -9,6 +9,8 @@ class Column
 
     protected bool $sortable = false;
 
+    protected bool $hidden = false;
+
     public function __construct(string $field, string $title)
     {
         $this->field = $field;
@@ -29,5 +31,23 @@ class Column
     public function isSortable(): bool
     {
         return $this->sortable;
+    }
+
+    /**
+     * Establece si la columna debe estar oculta.
+     * Recibe directamente un booleano (resultado de cualquier condición)
+     *
+     * @param bool $hidden
+     * @return $this
+     */
+    public function hidden(bool $hidden): self
+    {
+        $this->hidden = $hidden;
+        return $this;
+    }
+
+    public function isHidden(): bool
+    {
+        return $this->hidden;
     }
 }

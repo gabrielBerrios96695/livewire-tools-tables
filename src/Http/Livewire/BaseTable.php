@@ -8,15 +8,23 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class BaseTable extends Component
 {
-    public string $style = 'dark';
     public ?string $sortField = null;
     public ?string $sortDirection = null;
+
+    public string $template;
+    public string $style;
 
     protected Sortable $sortable;
 
     public function mount()
     {
         $this->sortable = new Sortable();
+
+        // Template fijo
+        $this->template = 'tools-table::templates.base';
+
+        // Estilo: prioridad al definido por el componente, luego config/env, por último 'ligth'
+        $this->style = $this->style ?? config('livewire-table.styles', env('LIVEWIRE_TABLE_STYLE', 'ligth'));
     }
 
     public function sortBy(string $field)
@@ -59,12 +67,21 @@ abstract class BaseTable extends Component
 
     public function render()
     {
-       return view('tools-table::components.table', [
-        'columns' => $this->columns(),
-        'records' => $this->sortedRecords,
-        'sortField' => $this->sortField,
-        'sortDirection' => $this->sortDirection,
-        'style' => $this->style,
+        // Filtrar columnas que no están ocultas (hidden == false)
+        $columns = collect($this->columns())->filter(function ($column) {
+            // Si la propiedad hidden no está definida, asumimos visible (false)
+            if (method_exists($column, 'isHidden')) {
+                return !$column->isHidden();
+            }
+            return true;
+        })->values()->all();
+
+        return view($this->template, [
+            'columns' => $columns,
+            'records' => $this->sortedRecords,
+            'sortField' => $this->sortField,
+            'sortDirection' => $this->sortDirection,
+            'style' => $this->style,
         ]);
     }
 

@@ -17,45 +17,33 @@ class ActionColumn extends Column
     }
 
     /**
-     * Agrega un botón que apunta a una ruta
+     * Agrega un botón con contenido HTML completo.
      *
-     * @param string $label Texto del botón
-     * @param string|null $route Nombre de la ruta
-     * @param array $params Campos para construir la URL (ej: ['id'])
-     * @param string $class Clases CSS para el botón
-     * @param string|null $icon Nombre del icono para blade lucide (sin x-lucide-)
-     * @param string|null $title Texto tooltip
+     * @param string $html Contenido del botón (incluye iconos, texto, clases, etc.)
+     * @param string|null $route Ruta opcional (por nombre)
+     * @param array $params Parámetros para la ruta, por ejemplo: ['id']
      * @return static
      */
-    public function button(
-        string $label,
-        ?string $route = null,
-        array $params = [],
-        string $class = 'bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition',
-        ?string $icon = null,
-        ?string $title = null
-    ): static {
-        $this->buttons[] = compact('label', 'route', 'params', 'class', 'icon', 'title');
+    public function button(string $html, ?string $route = null, array $params = []): static
+    {
+        $this->buttons[] = compact('html', 'route', 'params');
         return $this;
     }
 
     public function resolve($record): string
-{
-    $output = '<div class="flex justify-center items-center space-x-2">';
-    foreach ($this->buttons as $btn) {
-        $url = $btn['route']
-            ? route($btn['route'], collect($btn['params'])->mapWithKeys(fn($key) => [$key => $record->{$key}])->toArray())
-            : '#';
+    {
+        $output = '<div class="flex justify-center items-center space-x-2">';
+        foreach ($this->buttons as $btn) {
+            $url = $btn['route']
+                ? route($btn['route'], collect($btn['params'])->mapWithKeys(fn($key) => [$key => $record->{$key}])->toArray())
+                : '#';
 
-        $output .= sprintf(
-            '<a href="%s" class="%s" title="%s">%s</a>',
-            $url,
-            $btn['class'],
-            e($btn['title'] ?? ''),
-            e($btn['label'])
-        );
+            $output .= sprintf(
+                '<a href="%s">%s</a>',
+                $url,
+                $btn['html'] // usamos el HTML completo que ya viene con estilos e íconos
+            );
+        }
+        return $output . '</div>';
     }
-    return $output . '</div>';
-}
-
 }
