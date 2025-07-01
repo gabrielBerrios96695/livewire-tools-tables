@@ -24,26 +24,33 @@
         </div>
     </div>
 
-    <!-- Tabla -->
-    <table class="tools-data-table">
+    <table class="tools-data-table" x-data>
         <thead>
             <tr>
                 @foreach ($columns as $column)
                     @php
                         $sortable = method_exists($column, 'isSortable') && $column->isSortable();
                         $sortKey = method_exists($column, 'getFieldForSorting') ? $column->getFieldForSorting() : $column->field;
+                        $isSorted = isset($multiSort[$sortKey]);
+                        $direction = $isSorted ? $multiSort[$sortKey] : null;
+                        $orderIndex = null;
+
+                        if ($isSorted && count($multiSort) > 1) {
+                            $orderIndex = array_search($sortKey, array_keys($multiSort)) + 1;
+                        }
                     @endphp
                     <th
                         @if ($sortable)
-                            wire:click="sortBy('{{ $sortKey }}')"
-                            class="{{ $sortable ? 'sortable' : '' }} {{ $sortField === $sortKey ? 'sorted' : '' }}"
+                            wire:click="sortByColumn('{{ $sortKey }}')"
+                            class="sortable {{ $isSorted ? 'sorted' : '' }}"
+                            style="cursor:pointer;"
                         @endif
                     >
                         <div class="th-content">
                             <span>{{ $column->title }}</span>
-                            @if ($sortable && $sortField === $sortKey)
+                            @if ($direction)
                                 <span class="sort-icon">
-                                    {{ $sortDirection === 'asc' ? '▲' : '▼' }}
+                                    {{ $orderIndex ? $orderIndex : '' }}{{ $direction === 'asc' ? '▲' : '▼' }}
                                 </span>
                             @endif
                         </div>
@@ -67,6 +74,7 @@
             @endforeach
         </tbody>
     </table>
+
 
     <!-- Paginación -->
     <div class="pagination">

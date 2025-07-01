@@ -1,3 +1,5 @@
+---
+
 # 📊 Livewire Tools Table
 
 [![Licencia MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)  
@@ -8,7 +10,7 @@
 
 ---
 
-**Livewire Tools Table** es un paquete Laravel + Livewire que te permite crear **tablas dinámicas, ordenables y personalizadas** a partir de modelos Eloquent. Soporta columnas configurables, cálculos personalizados, botones HTML y estilos visuales listos para usar.
+**Livewire Tools Table** es un paquete Laravel + Livewire que te permite crear **tablas dinámicas, ordenables y personalizadas** a partir de modelos Eloquent, sin depender del stack TALL. Soporta columnas configurables, cálculos personalizados, botones HTML y estilos visuales listos para usar.
 
 > Diseñado para desarrolladores que quieren productividad sin complicaciones.
 

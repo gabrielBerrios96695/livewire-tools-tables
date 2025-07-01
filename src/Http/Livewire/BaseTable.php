@@ -3,7 +3,6 @@
 namespace Gambito\LivewireTable\Http\Livewire;
 
 use Livewire\Component;
-use Gambito\LivewireTable\Filters\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 
 abstract class BaseTable extends Component
@@ -11,47 +10,63 @@ abstract class BaseTable extends Component
     public ?string $sortField = null;
     public ?string $sortDirection = null;
 
+    public array $multiSort = [];
+
+    public bool $useMultiSort = true; // multiordenamiento forzado
+
     public string $template;
     public string $style;
 
-    protected Sortable $sortable;
+    protected $listeners = ['sortByColumn'];
 
     public function mount()
     {
-        $this->sortable = new Sortable();
-
-        // Template fijo
         $this->template = 'tools-table::templates.base';
-
-        // Estilo: prioridad al definido por el componente, luego config/env, por último 'ligth'
         $this->style = $this->style ?? config('livewire-table.styles', env('LIVEWIRE_TABLE_STYLE', 'ligth'));
     }
 
-    public function sortBy(string $field)
+    // Método llamado por wire:click en las cabeceras para ordenar
+    public function sortByColumn(string $field)
     {
-        if (!isset($this->sortable)) {
-            $this->sortable = new Sortable();
+        if (!$this->useMultiSort) {
+            // Solo para referencia, si quieres orden simple lo puedes implementar
+            $this->sortField = $field;
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+            $this->multiSort = [];
+            return;
         }
 
-        $this->sortable->sortField = $this->sortField;
-        $this->sortable->sortDirection = $this->sortDirection;
+        // Multiordenamiento con 3 estados
+        $current = $this->multiSort[$field] ?? null;
 
-        $this->sortable->sortBy($field);
+        $next = match ($current) {
+            null => 'asc',
+            'asc' => 'desc',
+            'desc' => null,
+        };
 
-        $this->sortField = $this->sortable->sortField;
-        $this->sortDirection = $this->sortable->sortDirection;
+        if ($next) {
+            $this->multiSort[$field] = $next;
+        } else {
+            unset($this->multiSort[$field]);
+        }
+
+        // Limpia orden simple
+        $this->sortField = null;
+        $this->sortDirection = null;
     }
 
     protected function applySorting(Builder $query): Builder
     {
-        if (!isset($this->sortable)) {
-            $this->sortable = new Sortable();
+        if (!empty($this->multiSort)) {
+            foreach ($this->multiSort as $field => $direction) {
+                $query->orderBy($field, $direction);
+            }
+        } elseif ($this->sortField && $this->sortDirection) {
+            $query->orderBy($this->sortField, $this->sortDirection);
         }
 
-        $this->sortable->sortField = $this->sortField;
-        $this->sortable->sortDirection = $this->sortDirection;
-
-        return $this->sortable->apply($query);
+        return $query;
     }
 
     public function getSortedRecordsProperty()
@@ -67,21 +82,18 @@ abstract class BaseTable extends Component
 
     public function render()
     {
-        // Filtrar columnas que no están ocultas (hidden == false)
         $columns = collect($this->columns())->filter(function ($column) {
-            // Si la propiedad hidden no está definida, asumimos visible (false)
-            if (method_exists($column, 'isHidden')) {
-                return !$column->isHidden();
-            }
-            return true;
+            return !method_exists($column, 'isHidden') || !$column->isHidden();
         })->values()->all();
 
         return view($this->template, [
-            'columns' => $columns,
-            'records' => $this->sortedRecords,
-            'sortField' => $this->sortField,
+            'columns'       => $columns,
+            'records'       => $this->sortedRecords,
+            'sortField'     => $this->sortField,
             'sortDirection' => $this->sortDirection,
-            'style' => $this->style,
+            'multiSort'     => $this->multiSort,
+            'style'         => $this->style,
+            'useMultiSort'  => $this->useMultiSort,
         ]);
     }
 
