@@ -128,12 +128,12 @@ ActionColumn::make('Acciones')
 🎨 Estilos visuales
 
 Incluye temas por defecto en Blade puro (sin Tailwind):
-
+```bash
 resources/views/styles/
 ├── dark.blade.php
 ├── ligth.blade.php
 └── neon-retro.blade.php
-
+```
 Cómo seleccionar el estilo:
 
 Desde el componente:
