@@ -49,7 +49,7 @@ Esto generará un componente Livewire como UserToolsTable, listo para usarse:
 ---
 
 🧱 Estructura del componente generado
-```bash
+```php
 use App\Models\User;
 use Gambito\LivewireTable\Columns\Column;
 use Gambito\LivewireTable\Http\Livewire\BaseTable;
