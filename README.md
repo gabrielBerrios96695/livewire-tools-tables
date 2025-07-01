@@ -49,7 +49,7 @@ Esto generará un componente Livewire como UserToolsTable, listo para usarse:
 ---
 
 🧱 Estructura del componente generado
-
+```bash
 use App\Models\User;
 use Gambito\LivewireTable\Columns\Column;
 use Gambito\LivewireTable\Http\Livewire\BaseTable;
@@ -72,7 +72,7 @@ class UserToolsTable extends BaseTable
     }
 }
 
-
+```
 ---
 
 🧠 Tipos de columnas
@@ -80,10 +80,10 @@ class UserToolsTable extends BaseTable
 🔹 Column
 
 Columna estándar con ordenamiento y visibilidad.
-
+```bash
 Column::make('email', 'Correo')->sortable()->hidden(false)
 
-
+```
 ---
 
 ✨ CustomColumn
@@ -91,21 +91,22 @@ Column::make('email', 'Correo')->sortable()->hidden(false)
 Define columnas que combinan, transforman o calculan valores de forma dinámica.
 
 🧪 Ejemplo 1: Concatenar nombre completo
-
+```bash
 CustomColumn::make('name . " " . last_name', 'Nombre completo')
+```
 
 🔢 Ejemplo 2: Calcular edad desde la fecha
-
+```bash
 CustomColumn::make('(int)((time() - strtotime(birth_date)) / 31556926)', 'Edad')
-
+```
 🛑 Ejemplo 3: Campo condicional con fallback
-
+```bash
 CustomColumn::make('email ? email : "No disponible"', 'Correo')
-
+```
 💡 Ejemplo 4: Iniciales del usuario
-
+```bash
 CustomColumn::make('substr(name, 0, 1) . substr(last_name, 0, 1)', 'Iniciales')
-
+```
 > Las expresiones son evaluadas dinámicamente usando los atributos del modelo. No necesitas definir callbacks manuales.
 
 
@@ -116,11 +117,11 @@ CustomColumn::make('substr(name, 0, 1) . substr(last_name, 0, 1)', 'Iniciales')
 🧩 ActionColumn
 
 Permite agregar múltiples botones con rutas y estilos personalizados.
-
+```bash
 ActionColumn::make('Acciones')
     ->button('<button class="btn btn-sm">✏️ Editar</button>', 'users.edit', ['id'])
     ->button('<button class="btn btn-sm btn-danger">🗑️ Eliminar</button>', 'users.delete', ['id'])
-
+```
 
 ---
 
@@ -136,24 +137,26 @@ resources/views/styles/
 Cómo seleccionar el estilo:
 
 Desde el componente:
+```bash
 
 public string $style = 'dark';
-
+```
 Desde .env:
 
+```bash
 LIVEWIRE_TABLE_STYLE=neon-retro
-
+```
 O en config/tools.php:
-
+```bash
 return [
     'styles' => env('LIVEWIRE_TABLE_STYLE', 'ligth'),
 ];
-
+```
 
 ---
 
 🛠️ Estructura del paquete
-
+```bash
 livewire-tools-table/
 ├── src/
 │   ├── Columns/
@@ -168,7 +171,7 @@ livewire-tools-table/
 │   └── templates/base.blade.php
 ├── config/tools.php
 └── README.md
-
+```
 
 ---
 
