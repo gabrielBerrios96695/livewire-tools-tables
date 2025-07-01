@@ -20,12 +20,14 @@
 
 ```bash
 composer require gambito404/tools-table
-
+```
+---
 Opcionalmente, publica los archivos si deseas personalizar vistas o configuración:
 
+```bash
 php artisan vendor:publish --tag=tools-table-config
 php artisan vendor:publish --tag=tools-table-views
-
+```
 
 ---
 
@@ -33,12 +35,16 @@ php artisan vendor:publish --tag=tools-table-views
 
 Crea una tabla a partir de un modelo con un solo comando:
 
+```bash
+
 php artisan make:tools-table --model=User
+```
 
 Esto generará un componente Livewire como UserToolsTable, listo para usarse:
+```bash
 
 <livewire:user-tools-table />
-
+```
 
 ---
 
