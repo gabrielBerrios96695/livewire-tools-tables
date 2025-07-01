@@ -7,11 +7,6 @@
 ![Laravel Version](https://img.shields.io/badge/laravel-10%2B-orange.svg)
 ![Livewire Version](https://img.shields.io/badge/livewire-3%2B-purple.svg)
 
-<div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="50" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" width="50" />
-  <img src="https://www.svgrepo.com/show/448221/livewire.svg" width="50" />
-</div>
 
 ---
 
