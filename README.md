@@ -1,5 +1,3 @@
----
-
 # 📊 Livewire Tools Table
 
 [![Licencia MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)  
@@ -10,7 +8,7 @@
 
 ---
 
-**Livewire Tools Table** es un paquete Laravel + Livewire que te permite crear **tablas dinámicas, ordenables y personalizadas** a partir de modelos Eloquent, sin depender del stack TALL. Soporta columnas configurables, cálculos personalizados, botones HTML y estilos visuales listos para usar.
+**Livewire Tools Table** es un paquete Laravel + Livewire que te permite crear **tablas dinámicas, ordenables y personalizadas** a partir de modelos Eloquent. Soporta columnas configurables, cálculos personalizados, botones HTML y estilos visuales listos para usar.
 
 > Diseñado para desarrolladores que quieren productividad sin complicaciones.
 
@@ -75,7 +73,7 @@ class UserToolsTable extends BaseTable
 ```
 ---
 
-🧠 Tipos de columnas
+ Tipos de columnas
 
 🔹 Column
 
@@ -86,24 +84,24 @@ Column::make('email', 'Correo')->sortable()->hidden(false)
 ```
 ---
 
-✨ CustomColumn
+ CustomColumn
 
 Define columnas que combinan, transforman o calculan valores de forma dinámica.
 
-🧪 Ejemplo 1: Concatenar nombre completo
+ Ejemplo 1: Concatenar nombre completo
 ```bash
 CustomColumn::make('name . " " . last_name', 'Nombre completo')
 ```
 
-🔢 Ejemplo 2: Calcular edad desde la fecha
+ Ejemplo 2: Calcular edad desde la fecha
 ```bash
 CustomColumn::make('(int)((time() - strtotime(birth_date)) / 31556926)', 'Edad')
 ```
-🛑 Ejemplo 3: Campo condicional con fallback
+ Ejemplo 3: Campo condicional con fallback
 ```bash
 CustomColumn::make('email ? email : "No disponible"', 'Correo')
 ```
-💡 Ejemplo 4: Iniciales del usuario
+ Ejemplo 4: Iniciales del usuario
 ```bash
 CustomColumn::make('substr(name, 0, 1) . substr(last_name, 0, 1)', 'Iniciales')
 ```
@@ -114,7 +112,7 @@ CustomColumn::make('substr(name, 0, 1) . substr(last_name, 0, 1)', 'Iniciales')
 
 ---
 
-🧩 ActionColumn
+ ActionColumn
 
 Permite agregar múltiples botones con rutas y estilos personalizados.
 ```bash
@@ -125,7 +123,7 @@ ActionColumn::make('Acciones')
 
 ---
 
-🎨 Estilos visuales
+Estilos visuales
 
 Incluye temas por defecto en Blade puro (sin Tailwind):
 ```bash
@@ -144,7 +142,7 @@ public string $style = 'dark';
 Desde .env:
 
 ```bash
-LIVEWIRE_TABLE_STYLE=neon-retro
+LIVEWIRE_TABLE_STYLE=ligth
 ```
 O en config/tools.php:
 ```bash
@@ -155,7 +153,7 @@ return [
 
 ---
 
-🛠️ Estructura del paquete
+ Estructura del paquete
 ```bash
 livewire-tools-table/
 ├── src/
@@ -172,52 +170,6 @@ livewire-tools-table/
 ├── config/tools.php
 └── README.md
 ```
-
----
-
-✅ Próximas mejoras
-
-🔍 Búsqueda global por texto
-
-🧪 Filtros por columna
-
-🧾 Exportación a Excel y PDF
-
-🧩 Soporte para CRUD en modales Livewire
-
-🧱 Builder visual para definir columnas desde UI
-
-📦 Presets de columnas por usuario
-
-↕️ Reordenar filas y columnas con drag & drop
-
-💾 Persistencia del orden y visibilidad de columnas
-
-🔄 Recarga automática por eventos
-
-🧮 Nuevas columnas planificadas:
-
-BooleanColumn: muestra ✅ o ❌ según el valor booleano
-
-BadgeColumn: etiquetas con color (ej. estado)
-
-DateColumn: formatea fechas automáticamente
-
-ImageColumn: muestra imágenes desde una URL/campo
-
-ProgressColumn: barras de progreso visuales
-
-ToggleColumn: switches interactivos (on/off)
-
-IconColumn: íconos dinámicos según condición
-
-CheckboxColumn: selección múltiple de filas
-
-RelationColumn: acceso directo a relaciones Eloquent (ej. user.name)
-
-
-
-
 ---
 
 👨‍💻 Autor

@@ -1,12 +1,12 @@
 {
-    "name": "gambito/tools-table",
+    "name": "gambito404/tools-table",
     "description": "Tabla dinámica para Livewire con soporte de columnas, filtros y temas.",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Gabriel Armando Berrios Mendoza",
-            "email": "berrios.gabriel649@gmail.com"
+            "email": "gabrielberriosmendoza@gmail.com"
         }
     ],
     "require": {
@@ -26,6 +26,6 @@
             ]
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
