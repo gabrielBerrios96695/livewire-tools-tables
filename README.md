@@ -75,9 +75,9 @@ class UserToolsTable extends BaseTable
 ```
 ---
 
- Tipos de columnas
+## Tipos de columnas
 
-🔹 Column
+- Column
 
 Columna estándar con ordenamiento y visibilidad.
 ```bash
@@ -86,25 +86,25 @@ Column::make('email', 'Correo')->sortable()->hidden(false)
 ```
 ---
 
- CustomColumn
+- CustomColumn
 
 Define columnas que combinan, transforman o calculan valores de forma dinámica.
 
  Ejemplo 1: Concatenar nombre completo
-```bash
+```php
 CustomColumn::make('name . " " . last_name', 'Nombre completo')
 ```
 
  Ejemplo 2: Calcular edad desde la fecha
-```bash
+```php
 CustomColumn::make('(int)((time() - strtotime(birth_date)) / 31556926)', 'Edad')
 ```
  Ejemplo 3: Campo condicional con fallback
-```bash
+```php
 CustomColumn::make('email ? email : "No disponible"', 'Correo')
 ```
  Ejemplo 4: Iniciales del usuario
-```bash
+```php
 CustomColumn::make('substr(name, 0, 1) . substr(last_name, 0, 1)', 'Iniciales')
 ```
 > Las expresiones son evaluadas dinámicamente usando los atributos del modelo. No necesitas definir callbacks manuales.
@@ -114,7 +114,7 @@ CustomColumn::make('substr(name, 0, 1) . substr(last_name, 0, 1)', 'Iniciales')
 
 ---
 
- ActionColumn
+- ActionColumn
 
 Permite agregar múltiples botones con rutas y estilos personalizados.
 ```bash
@@ -124,30 +124,40 @@ ActionColumn::make('Acciones')
 ```
 
 ---
+## 📊 Ordenamiento avanzado
+Livewire Tools Table ahora soporta:
 
+- Ordenamiento simple (modo por defecto): clic en una columna para ordenar ascendente/descendente.
+
+- Ordenamiento múltiple: mantén presionada la tecla Ctrl mientras haces clic en varias columnas para ordenar por múltiples campos simultáneamente.
+
+- Botón Reset: limpia todos los criterios de ordenamiento activos con un solo clic.
+
+>Esta funcionalidad mejora la experiencia para manejar tablas con múltiples criterios de ordenamiento de forma intuitiva y rápida.
+---
 Estilos visuales
 
-Incluye temas por defecto en Blade puro (sin Tailwind):
+Incluye temas por defecto en Blade puro:
 ```bash
 resources/views/styles/
 ├── dark.blade.php
-├── ligth.blade.php
-└── neon-retro.blade.php
+└── ligth.blade.php
+
 ```
 Cómo seleccionar el estilo:
 
 Desde el componente:
-```bash
+```php
 
 public string $style = 'dark';
 ```
 Desde .env:
 
-```bash
+```php
 LIVEWIRE_TABLE_STYLE=ligth
 ```
 O en config/tools.php:
-```bash
+```php
 return [
     'styles' => env('LIVEWIRE_TABLE_STYLE', 'ligth'),
 ];
