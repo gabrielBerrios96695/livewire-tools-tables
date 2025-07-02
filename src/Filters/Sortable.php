@@ -14,15 +14,20 @@ class Sortable
     public function sortByColumn(string $field, bool $isMultiSortRequest = false): void
     {
         if ($isMultiSortRequest) {
-            $this->multiSortActive = true;
-        }
+            // Si venimos de ordenamiento simple, migrar ese campo a multiSort
+            if (!$this->multiSortActive && $this->sortField && $this->sortDirection) {
+                $this->multiSort[$this->sortField] = $this->sortDirection;
+                $this->sortField = null;
+                $this->sortDirection = null;
+            }
 
-        if (!$this->multiSortActive) {
-            $this->handleSimpleSort($field);
+            $this->multiSortActive = true;
+            $this->handleMultiSort($field);
             return;
         }
 
-        $this->handleMultiSort($field);
+        // Ordenamiento simple
+        $this->handleSimpleSort($field);
     }
 
     protected function handleSimpleSort(string $field): void
@@ -42,7 +47,9 @@ class Sortable
             $this->sortDirection = 'asc';
         }
 
+        // Limpiar multiSort
         $this->multiSort = [];
+        $this->multiSortActive = false;
     }
 
     protected function handleMultiSort(string $field): void
